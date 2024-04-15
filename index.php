@@ -1,46 +1,78 @@
-<h1>POO Entreprise</h1>
-
-
 <?php
+{
+class Contrat 
+{
+    //definition des attributs (on enlève alors toute trace de ce qui est "entreprise" dans la classe Employe)
+    private Entreprise $entreprise;
+    private Employe $employe;
+    private DateTime $dateEmbauche;
+    private string $typeContrat;
 
-// require "Entreprise.php";
-// require "Employe.php";
 
-spl_autoload_register(function ($class_name) {
-    require 'classes/'. $class_name . '.php';
-});
+    public function __construct(Entreprise $entreprise, Employe $employe, string $dateEmbauche, string $typeContrat) 
+{
+    //definition des valeurs
+    $this->Entreprise = $entreprise;
+    $this->Employe = $employe;
+    $this->dateEmbauche = new DateTime($dateEmbauche);
+    $this->typeContrat = $typeContrat;
+    // pour que quand je rajoute un contrat, cela se rajoute automatiquement dans les classes Entreprise et Employe
+    //les deux tableaux contrats ens Entreprise et Employe vont s'alimenter automatiquement
+}
 
-//echo $elanformation->getRaisonSociale();
-//var_dump($elanFormation);
-//echo $elanFormation->getRaisonSociale()." a été crée le ".$elanFormation->getdateCreation()->format("d-m-Y")." et se situe à l'adresse suivante ".$elanFormation->getadresse()." ".$elanFormation->getcodePostal()." ".$elanFormation->getville();
-//echo $elanFormation->getadresseComplete();
-//echo $elanFormation->getRaisonSociale()." a été crée le ".$elanFormation->getdateCreation()->format("d-m-Y")." et se situe à l'adresse suivante ".$elanFormation->getadresseComplete();
+    //mise en place des getters & setters
+    public function getEntreprise()
+    {
+        return $this->entreprise;
+    }
 
-$elanFormation = new Entreprise("ELAN FORMATION", "1993-01-01", "14 rue du Rhône", "67100", "STRASBOURG" );
-$tf1 = new Entreprise("TF1", "1970-01-01", "13 rue de la Seine", "75000", "PARIS");
-$FranceTravail = new Entreprise("FranceTravail", "2023-01-01", "13 rue Caisserie", "91150", "ETAMPES");
+    public function setEntreprise($entreprise)
+    {
+        $this->entreprise = $entreprise;
 
-$stephane = new Employe("SMAIL", "Stéphane", "stephane@elan-formation.fr");
-$mickael = new Employe("MURRMANN", "Mickael", "mickael@elan-formation.fr");
+        return $this;
+    }
 
-$c1 = new Contrat($elanFormation, $stephane, "2020-01-01", "CDI");
-$c2 = new Contrat($elanFormation, $mickael, "2010-01-01", "CDD");
-$c3 = new Contrat($tf1, $stephane, "2022-01-01", "interim");
-$c4 = new Contrat($FranceTravail, $stephane, "2023-01-01", "CDD");
-//maintenant les employes, les entreprises et les contrats ont été listés
-//il nous faudra maintenant lister pour l'employeur les employes qui ont travailles chez lui et les salariés d'avoir toutes les entreprises dans lesquelles ils ont travaillés
+    public function getEmploye()
+    {
+        return $this->employe;
+    }
 
-// echo $elanFormation
-// echo $elanFormation->getInfos();
-// $stephane->setEntreprise($tf1);
-// echo $stephane->getInfos();
-// var_dump($elanFormation);
+    public function setEmploye($employe)
+    {
+        $this->employe = $employe;
 
-echo $elanFormation->afficherEmployes();
-echo $tf1->afficherEmployes();
-echo $FranceTravail->afficherEmployes();
+        return $this;
+    }
 
-echo $stephane->afficherEntreprises();
-echo $mickael->afficherEntreprises();
+   public function getDateEmbauche()
+    {
+        return $this->dateEmbauche->format("d-m-Y"); //si on veut formater l'affichage de la date 
+    }
 
+    public function setDateEmbauche($dateEmbauche)
+    {
+        $this->dateEmbauche = $dateEmbauche;
+
+        return $this;
+    }
+
+}
+ 
+    public function getTypeContrat()
+    {
+        return $this->typeContrat;
+    }
+ 
+    public function setTypeContrat($typeContrat)
+    {
+        $this->typeContrat = $typeContrat;
+
+        return $this;
+    }
+
+    public function __toString() {
+        return $this->prenom." ".$this->nom;
+    }
+}
 ?>
