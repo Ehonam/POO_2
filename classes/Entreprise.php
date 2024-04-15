@@ -8,7 +8,7 @@ class Entreprise
     private string $adresse;
     private string $codePostal;
     private string $ville;
-    private array $employes;
+    private array $contrats; //on se retrouve avec une liste de contrats et on enlève les getters et setters liés à "employés"
 
     public function __construct(string $raisonSociale, string $dateCreation, string $adresse, string $codePostal, string $ville)
     {
@@ -18,7 +18,7 @@ class Entreprise
         $this->adresse = $adresse;
         $this->codePostal = $codePostal;
         $this->ville = $ville;
-        $this->employes =[];
+        $this->contrats =[];
     }
     // creation des getters et des setters (retourne la valeur) pour pouvoir faire la relation entre les 2
 
@@ -88,32 +88,38 @@ class Entreprise
         return $this." a été crée le ".$this->getDateCreation()->format("d-m-Y")." et se situe à l'adresse suivante ".$this->getadresseComplete();
     }
 
-    public function setEmployes()
+    public function getContrats()
     {
-        return $this->employes;
+        return $this->contrats;
     }
 
-public function addEmployes(Employe $employe)
-{
-    $this->employes[] = $employe;
-    //array_push($this)->employees, $employe);
-}
+    public function setContrats($contrats)
+    {
+        $this->contrats = $contrats;
 
-public function afficherEmployes()
-{
-    $result = "<h2>Employés de $this</h2><ul>";
-    foreach($this->employes as $employe) { 
-        $result .= "<li>$employe</li>"; } // on ne concatene pas parce qu'il y a to_String
-    $result .= "</ul>";
-    return $result;
-}
+        return $this;
+    }
+    
+    // lorsqu'on a un tableau dans une entité, il faut créer une fonction qui permettra de rajouter quelque chose dans ce tableau-là
+    public function addContrat(Contrat $contrats) 
+    {
+        $this->contrats[] = $contrat;
+    } //ici ça va sortir la liste des employés
+
+    public function afficherEmployes() 
+    {
+        $result = "<h2>Employés de $this</h2>";
+        foreach ($this->contrats as $contrat) 
+        {
+            $result .= $contrat->getEmploye()." (". $contrat->getdateEmbauche() ." en ".$contrat->gettypeContrat().")<br>";
+        }
+        return $result;
+    }
 
     // le to_String permet d'économiser l'appel d'un getter. Un to_String peut aller chercher un objet sans générer d'erreur
     public function __toString()  
     {
         return $this->raisonSociale;
     }
-
-
 }
 ?>
