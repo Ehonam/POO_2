@@ -117,3 +117,111 @@ public function afficherEmployes()
 
 }
 ?>
+
+........................................................................................
+
+<?php
+class Employe 
+{
+    // attributs
+    private string $nom;
+    private string $prenom;
+    private string $email;
+    private Entreprise $entreprise;
+
+    public function __construct(string $nom, string $prenom, string $email, Entreprise $entreprise)
+{
+    // initialisation des valeurs
+    $this->nom = $nom;
+    $this->prenom = $prenom;
+    $this->email = $email;
+    $this->entreprise = $entreprise;
+    $this->entreprise->addEmployes($this);
+}
+    //creation des getters et des setters
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+        return $this;
+    }
+
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+        return $this;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    public function getEntreprise()
+    {
+        return $this->entreprise;
+    }
+
+     public function setEntreprise($entreprise)
+    {
+        $this->entreprise = $entreprise;
+
+        return $this;
+    }
+
+    public function __toString() {
+        return $this->prenom." ".$this->nom;
+    }
+
+}
+
+?>
+
+..................................................................
+
+<h1>POO Entreprise</h1>
+
+
+<?php
+
+// require "Entreprise.php";
+// require "Employe.php";
+
+spl_autoload_register(function ($class_name) {
+    require 'classes/'. $class_name . '.php';
+});
+
+$elanFormation = new Entreprise("ELAN FORMATION", "1993-01-01", "14 rue du Rhône", "67100", "STRASBOURG" );
+//echo $elanformation->getRaisonSociale();
+//var_dump($elanFormation);
+//echo $elanFormation->getRaisonSociale()." a été crée le ".$elanFormation->getdateCreation()->format("d-m-Y")." et se situe à l'adresse suivante ".$elanFormation->getadresse()." ".$elanFormation->getcodePostal()." ".$elanFormation->getville();
+//echo $elanFormation->getadresseComplete();
+//echo $elanFormation->getRaisonSociale()." a été crée le ".$elanFormation->getdateCreation()->format("d-m-Y")." et se situe à l'adresse suivante ".$elanFormation->getadresseComplete();
+
+$stephane = new Employe("SMAIL", "Stéphane", "stephane@elan-formation.fr", $elanFormation);
+
+// echo $elanFormation
+// echo $elanFormation->getInfos();
+// $stephane->setEntreprise($tf1);
+// echo $stephane->getInfos();
+// var_dump($elanFormation);
+
+echo $elanFormation->afficherEmployes();
+
+?>
+
